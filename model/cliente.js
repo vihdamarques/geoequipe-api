@@ -1,12 +1,12 @@
-var Mongoose = require('mongoose')
-   ,Schema   = Mongoose.Schema;
+var mongoose = require('mongoose')
+   ,Schema   = mongoose.Schema;
 
-var clienteSchema = new Schema({
-   ,nome: String
-   ,ativo: {type: Boolean, default: true}
-   ,email: String
-   ,contato: String
-   ,telefone: String
+var schema = new Schema({
+    nome: {type: String, required: true}
+   ,ativo: {type: Boolean, default: true, required: true}
+   ,email: {type: String, required: true, unique: true}
+   ,contato: {type: String, required: true}
+   ,telefone: {type: String, required: true}
 }, { collection: 'cliente' });
 
-var Cliente = Mongoose.model('Cliente', clienteSchema);
+module.exports = mongoose.model('Cliente', schema);

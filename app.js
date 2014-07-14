@@ -1,5 +1,4 @@
 var express        = require('express')
-   ,http           = require('http')
    ,bodyParser     = require('body-parser')
    ,methodOverride = require('method-override')
    ,mongoose       = require('mongoose');
@@ -22,11 +21,11 @@ app.locals.timeZone = "-3";
 
 // -------------------- Routes --------------------
 var router   = express.Router()
-   ,task     = require('./route/task')
    ,customer = require('./route/customer')
+   ,user     = require('./route/user')
+//   ,task     = require('./route/task')
 //   ,signal = require('./route/signal')
 //   ,login  = require('./route/login')
-//   ,user   = require('./route/user')
 ;
 
 // middleware to use for all requests
@@ -35,38 +34,55 @@ router.use(function(req, res, next) {
   next();
 });
 
-// Home
-router.get('/', function(req, res){
+// ============= Home =============
+
+app.get('/', function(req, res){
     res.end("App rodando... Fila: " + app.locals.queue.length);
 });
 
-// Tarefa
-router.route('/task')
-      .get(task.find)
-      .post(task.save);
+// ============= Cliente =============
 
-router.route('/task/:id')
-      .get(task.find)
-      .put(task.save)
-      .delete(task.remove);
+router.route('/customer')
+      .get(customer.find)
+      .post(customer.save);
 
-router.post('/task/:id/checkin', task.checkIn);
-router.post('/task/:id/checkout', task.checkOut);
+router.route('/customer/:id')
+      .get(customer.find)
+      .put(customer.save)
+      .delete(customer.remove);
 
+// ============= Usuário =============
 
-// Sinal
+router.route('/user')
+      .get(user.find)
+      .post(user.save);
+
+router.route('/user/:id')
+      .get(user.find)
+      .put(user.save)
+      .delete(user.remove);
+
+// ============= Tarefa =============
+
+//router.route('/task')
+//      .get(task.find)
+//      .post(task.save);
+
+//router.route('/task/:id')
+//      .get(task.find)
+//      .put(task.save)
+//      .delete(task.remove);
+
+//router.post('/task/:id/checkin', task.checkIn);
+//router.post('/task/:id/checkout', task.checkOut);
+
+// ============= Sinal =============
+
 //app.get('/signal', signal);
 
 // Login
 //app.post('/login', login);
 
-
-//Usuario
-//app.route('/user')
-//   .get(user.list)
-//   .post(user.save)
-//   .del(task.remove)
-//   ;
 
 //app.get('/message', message); // TODO
 
